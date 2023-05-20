@@ -6,7 +6,6 @@ project(
         'buildtype=release',
         'optimization=3',
         'strip=true',
-        'cpp_std=c++20',
         'b_ndebug=if-release',
     ],
     version: '1.0.0',
