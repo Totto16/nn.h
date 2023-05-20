@@ -107,7 +107,7 @@ int main(void)
 
             char buffer[256];
             snprintf(buffer, sizeof(buffer), "Epoch: %zu/%zu, Rate: %f, Cost: %f", epoch, max_epoch, rate, nn_cost(nn, ti, to));
-            DrawTextEx(font, buffer, CLITERAL(Vector2){}, h*0.04, 0, WHITE);
+            DrawTextEx(font, buffer, CLITERAL(Vector2){0, 0}, h*0.04, 0, WHITE);
         }
         EndDrawing();
     }
