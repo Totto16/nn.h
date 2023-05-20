@@ -14,7 +14,11 @@
 
 #ifndef NN_ASSERT
 #include <assert.h>
+#ifdef NDEBUG
+#define NN_ASSERT (void)
+#else
 #define NN_ASSERT assert
+#endif
 #endif // NN_ASSERT
 
 #define ARRAY_LEN(xs) sizeof((xs))/sizeof((xs)[0])
@@ -136,11 +140,14 @@ void mat_save(FILE *out, Mat m)
 Mat mat_load(FILE *in)
 {
     uint64_t magic;
-    fread(&magic, sizeof(magic), 1, in);
+    size_t one = fread(&magic, sizeof(magic), 1, in);
+    NN_ASSERT(one == 1);
     NN_ASSERT(magic == 0x74616d2e682e6e6e);
     size_t rows, cols;
-    fread(&rows, sizeof(rows), 1, in);
-    fread(&cols, sizeof(cols), 1, in);
+    one = fread(&rows, sizeof(rows), 1, in);
+    NN_ASSERT(one == 1);
+    one = fread(&cols, sizeof(cols), 1, in);
+    NN_ASSERT(one == 1);
     Mat m = mat_alloc(rows, cols);
 
     size_t n = fread(m.es, sizeof(*m.es), rows*cols, in);
